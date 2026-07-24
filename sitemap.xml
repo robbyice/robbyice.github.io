@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>robbyice.github.io/jekyll/update/2026/07/17/welcome-to-jekyll.html</loc>
-<lastmod>2026-07-17T19:25:30+00:00</lastmod>
+<loc>https://robbyice.github.io/art/games/2026/07/20/turning-vector-into-gameobjects.html</loc>
+<lastmod>2026-07-20T19:25:30+00:00</lastmod>
 </url>
 <url>
-<loc>robbyice.github.io/about/</loc>
+<loc>https://robbyice.github.io/blog/</loc>
 </url>
 <url>
-<loc>robbyice.github.io/</loc>
+<loc>https://robbyice.github.io/games/</loc>
+</url>
+<url>
+<loc>https://robbyice.github.io/</loc>
 </url>
 </urlset>
