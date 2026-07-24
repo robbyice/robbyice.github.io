@@ -1,0 +1,7 @@
+main:
+  - title: "Home"
+    url: /
+  - title: "Games"
+    url: /games
+  - title: "Blog"
+    url: /blog

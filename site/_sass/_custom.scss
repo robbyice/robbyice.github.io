@@ -1,0 +1,395 @@
+/* ==========================================================================
+   Game grid (portfolio cards)
+   ========================================================================== */
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1.5em;
+  margin: 2em 0;
+}
+
+.game-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  aspect-ratio: 3 / 4;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid $border-color;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+.game-card__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-color: $background-color;
+  background-size: cover;
+  background-position: center;
+
+  .game-card--locked & {
+    filter: grayscale(100%) brightness(0.25);
+  }
+
+  .game-card--tint & {
+    filter: grayscale(45%);
+  }
+}
+
+.game-card__lock-overlay {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.45);
+
+  .game-card__lock {
+    font-size: 4.5em;
+    color: rgba(255, 255, 255, 0.55);
+  }
+}
+
+.game-card__icon {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5em;
+  color: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+
+.game-card__no-art {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4em;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.game-card__body {
+  position: relative;
+  z-index: 1;
+  padding: 0.5em 0.6em;
+  background: rgba(0, 0, 0, 0.72);
+  color: #fff;
+
+  .game-card__title {
+    margin: 0;
+    font-size: 0.85em;
+    font-weight: bold;
+    line-height: 1.15;
+  }
+
+  .game-card__dates {
+    margin: 0.1em 0 0.3em;
+    font-size: 0.55em;
+    color: rgba(255, 255, 255, 0.45);
+  }
+}
+
+.game-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25em;
+}
+
+.game-card__tag {
+  padding: 0.12em 0.4em;
+  border-radius: 3px;
+  background: $primary-color;
+  color: #fff;
+  font-size: 0.55em;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* ==========================================================================
+   Skills strip
+   ========================================================================== */
+
+.skills-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5em;
+  margin: 1.5em 0;
+}
+
+.skills-strip__group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5em;
+}
+
+.skills-strip__label {
+  font-size: 0.75em;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: $muted-text-color;
+}
+
+.skills-strip__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35em;
+}
+
+.skills-strip__tag {
+  padding: 0.2em 0.6em;
+  border-radius: 3px;
+  border: 1px solid $border-color;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+/* ==========================================================================
+   Portfolio page section headers
+   ========================================================================== */
+
+.portfolio-page h2 {
+  position: relative;
+  margin: 0 0 1.25em;
+  padding: 0.5em 0.9em;
+  background: mix($primary-color, $background-color, 12%);
+  border-left: 4px solid $primary-color;
+  border-radius: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 800;
+  font-size: 1.1em;
+}
+
+.page-section {
+  margin-bottom: 2.5em;
+  padding: 1.75em 2em;
+  background: mix(#fff, $background-color, 3%);
+  border: 1px solid $border-color;
+  border-radius: 10px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* ==========================================================================
+   Game detail sections (/games page)
+   ========================================================================== */
+
+.game-detail {
+  margin-bottom: 2.5em;
+  padding: 1.75em 2em;
+  background: mix(#fff, $background-color, 3%);
+  border: 1px solid $border-color;
+  border-radius: 10px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  h2 {
+    margin: 0 0 1em;
+  }
+}
+
+.game-detail__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6em 1em;
+  margin: 0 0 1.25em;
+}
+
+.game-detail__role {
+  font-weight: 700;
+  font-size: 1.05em;
+  color: $text-color;
+}
+
+.game-detail__company {
+  font-weight: 400;
+  color: $muted-text-color;
+}
+
+.game-detail__dates {
+  font-size: 0.8em;
+  font-weight: 700;
+  color: $muted-text-color;
+  background: mix($primary-color, $background-color, 10%);
+  padding: 0.3em 0.75em;
+  border-radius: 999px;
+  letter-spacing: 0.02em;
+}
+
+.game-detail__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  margin-bottom: 1.25em;
+
+  .game-card__tag {
+    font-size: 0.75em;
+  }
+}
+
+.game-detail__stores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75em;
+  margin-bottom: 1.25em;
+}
+
+.game-detail__store-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55em;
+  padding: 0.5em 1em;
+  border-radius: 6px;
+  border: 1px solid $border-color;
+  background: mix($primary-color, $background-color, 10%);
+  color: $text-color;
+  font-weight: bold;
+  font-size: 0.9em;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s ease;
+
+  i {
+    font-size: 1.3em;
+    color: $primary-color;
+  }
+
+  &:hover {
+    background: mix($primary-color, $background-color, 22%);
+    transform: translateY(-2px);
+    text-decoration: none;
+  }
+}
+
+.game-detail__images {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 1.25em;
+  margin-bottom: 1.5em;
+
+  img {
+    height: 340px;
+    width: auto;
+    max-width: 100%;
+    flex: 0 0 auto;
+    border-radius: 6px;
+    border: 1px solid $border-color;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5);
+    }
+  }
+}
+
+.game-detail__description {
+  margin-bottom: 1em;
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.game-detail__highlights {
+  margin: 0;
+  padding-left: 1.3em;
+
+  li {
+    margin-bottom: 0.5em;
+
+    &::marker {
+      color: $primary-color;
+    }
+  }
+
+  li:last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* ==========================================================================
+   Blog post figures
+   ========================================================================== */
+
+.post-figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2em 0;
+
+  img {
+    max-width: 100%;
+    border-radius: 6px;
+    border: 1px solid $border-color;
+  }
+
+  &--small img {
+    max-width: 320px;
+  }
+
+  figcaption {
+    margin-top: 0.6em;
+    font-size: 0.85em;
+    font-style: italic;
+    text-align: center;
+    color: $muted-text-color;
+  }
+}
+
+.post-figure-pair {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5em;
+  margin: 2em 0;
+
+  .post-figure {
+    flex: 1 1 280px;
+    margin: 0;
+  }
+}
+
+.post-figure-pair--shared-caption {
+  flex-wrap: wrap;
+
+  .post-figure-pair__images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5em;
+    width: 100%;
+
+    img {
+      flex: 1 1 280px;
+      max-width: 100%;
+      border-radius: 6px;
+      border: 1px solid $border-color;
+    }
+  }
+
+  figcaption {
+    width: 100%;
+    text-align: center;
+    margin-top: 0.6em;
+    font-size: 0.85em;
+    font-style: italic;
+    color: $muted-text-color;
+  }
+}

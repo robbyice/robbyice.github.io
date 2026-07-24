@@ -24,9 +24,43 @@ description: >- # this means to ignore newlines until "baseurl:"
   Game Developer, Unity & Mobile Engineer. 
   Personal site and blog for thoughts, work on upcoming games, and more!
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "robbyice.github.io" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: none
+url: "https://robbyice.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+twitter_username:
 github_username:  robbyice
+
+minimal_mistakes_skin: "dark"
+
+author:
+  name: "Rob Neumann"
+  avatar: # e.g. /assets/images/avatar.jpg — square image recommended, add the file under site/assets/images/
+  bio: "Programmer & Game Developer based in Seattle, Washington"
+  location: "Seattle, WA"
+  email: "robert@bestangle.com"
+  github: "robbyice"
+  linkedin: "rob-neumann"
+  links:
+    # Free-form extra links (itch.io, personal site, etc). Example:
+    # - label: "itch.io"
+    #   icon: "fas fa-fw fa-gamepad"
+    #   url: "https://your-username.itch.io"
+
+collections:
+  games:
+    output: false
+
+defaults:
+  # _posts
+  - scope:
+      path: ""
+      type: post
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: true
+      share: true
+      related: true
+
 
 # Build settings
 theme: minimal-mistakes-jekyll

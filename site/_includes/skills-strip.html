@@ -1,0 +1,37 @@
+{% comment %}
+Derives Engines/Languages/Platforms tags from site.games so it stays in sync
+with the games collection automatically.
+{% endcomment %}
+{% assign engines = "" | split: "" %}
+{% assign languages = "" | split: "" %}
+{% assign platforms = "" | split: "" %}
+{% for game in site.games %}
+  {% assign game_engines = game.engine | join: "|||" | split: "|||" %}
+  {% assign engines = engines | concat: game_engines %}
+  {% assign languages = languages | concat: game.language %}
+  {% assign platforms = platforms | concat: game.platforms %}
+{% endfor %}
+{% assign engines = engines | uniq | sort %}
+{% assign languages = languages | uniq | sort %}
+{% assign platforms = platforms | uniq | sort %}
+
+<div class="skills-strip">
+  <div class="skills-strip__group">
+    <span class="skills-strip__label">Engines</span>
+    <div class="skills-strip__tags">
+      {% for e in engines %}<span class="skills-strip__tag">{{ e }}</span>{% endfor %}
+    </div>
+  </div>
+  <div class="skills-strip__group">
+    <span class="skills-strip__label">Languages</span>
+    <div class="skills-strip__tags">
+      {% for l in languages %}<span class="skills-strip__tag">{{ l }}</span>{% endfor %}
+    </div>
+  </div>
+  <div class="skills-strip__group">
+    <span class="skills-strip__label">Platforms</span>
+    <div class="skills-strip__tags">
+      {% for p in platforms %}<span class="skills-strip__tag">{{ p }}</span>{% endfor %}
+    </div>
+  </div>
+</div>

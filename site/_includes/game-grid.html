@@ -1,0 +1,37 @@
+<div class="game-grid">
+  {% assign games = site.games | sort: "order" %}
+  {% for game in games %}
+    <div class="game-card{% if game.locked %} game-card--locked{% endif %}{% if game.tint %} game-card--tint{% endif %}">
+      <div class="game-card__bg"
+        {% if game.image %}
+        style="background-image: url('{{ game.image | relative_url }}'); background-position: {{ game.image_position | default: 'center' }};"
+        {% else %}
+        style="background-color: {{ game.placeholder_color | default: '#444444' }};"
+        {% endif %}></div>
+
+      {% if game.card_icon %}
+        <i class="game-card__icon fas fa-{{ game.card_icon }}" aria-hidden="true"></i>
+      {% endif %}
+
+      {% if game.locked %}
+        <div class="game-card__lock-overlay">
+          <i class="game-card__lock fas fa-lock" aria-hidden="true"></i>
+        </div>
+      {% elsif game.no_art %}
+        <div class="game-card__no-art">?</div>
+      {% endif %}
+
+      <div class="game-card__body">
+        <p class="game-card__title">{{ game.title }}</p>
+        <p class="game-card__dates">
+          {{ game.date | date: "%b %Y" }} &ndash; {% if game.date_end %}{{ game.date_end | date: "%b %Y" }}{% else %}Present{% endif %}
+        </p>
+        <div class="game-card__tags">
+          {% for engine in game.engine %}<span class="game-card__tag">{{ engine }}</span>{% endfor %}
+          {% for lang in game.language %}<span class="game-card__tag">{{ lang }}</span>{% endfor %}
+          {% for platform in game.platforms %}<span class="game-card__tag">{{ platform }}</span>{% endfor %}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>

@@ -1,0 +1,50 @@
+{% assign game = include.game %}
+<div class="game-detail">
+  <h2>{{ game.title }}</h2>
+
+  <div class="game-detail__meta">
+    {% if game.role %}
+      <span class="game-detail__role">{{ game.role }}{% if game.company %} <span class="game-detail__company">&mdash; {{ game.company }}</span>{% endif %}</span>
+    {% endif %}
+    <span class="game-detail__dates">{{ game.date | date: "%b %Y" }} &ndash; {% if game.date_end %}{{ game.date_end | date: "%b %Y" }}{% else %}Present{% endif %}</span>
+  </div>
+
+  <div class="game-detail__tags">
+    {% for engine in game.engine %}<span class="game-card__tag">{{ engine }}</span>{% endfor %}
+    {% for lang in game.language %}<span class="game-card__tag">{{ lang }}</span>{% endfor %}
+    {% for platform in game.platforms %}<span class="game-card__tag">{{ platform }}</span>{% endfor %}
+  </div>
+
+  {% if game.app_store_url or game.play_store_url %}
+    <div class="game-detail__stores">
+      {% if game.app_store_url %}
+        <a href="{{ game.app_store_url }}" class="game-detail__store-link" target="_blank" rel="noopener noreferrer" aria-label="Download {{ game.title }} on the App Store">
+          <i class="fab fa-app-store-ios" aria-hidden="true"></i> App Store
+        </a>
+      {% endif %}
+      {% if game.play_store_url %}
+        <a href="{{ game.play_store_url }}" class="game-detail__store-link" target="_blank" rel="noopener noreferrer" aria-label="Get {{ game.title }} on Google Play">
+          <i class="fab fa-google-play" aria-hidden="true"></i> Google Play
+        </a>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% if game.gameplay_images and game.gameplay_images.size > 0 %}
+    <div class="game-detail__images">
+      {% for img in game.gameplay_images %}
+        <img src="{{ img | relative_url }}" alt="{{ game.title }} gameplay screenshot" loading="lazy">
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div class="game-detail__description">
+    {{ game.content }}
+  </div>
+
+  {% if game.highlights and game.highlights.size > 0 %}
+    <ul class="game-detail__highlights">
+      {% for h in game.highlights %}<li>{{ h }}</li>{% endfor %}
+    </ul>
+  {% endif %}
+</div>
