@@ -6,7 +6,7 @@ language: ["C#"]
 date: 2025-04-01
 date_end: 2025-08-01
 placeholder_color: "#1a1a3d"
-image: /assets/images/games/etu/gameplay1.png
+image: /assets/images/games/etu/gameplay1.jpg
 image_position: "center"   # optional — CSS background-position, for cropping control
 order: 2
 role: "Lead Engineer"
@@ -18,9 +18,9 @@ highlights:
   - "Built a framework for dynamic procedural levels plus tooling to configure, generate, and control level content — key to creating dozens of varied, replayable levels"
   - "Developed a custom moving parallax background system supporting both static repeating layers and dynamic, runtime-generated layers with randomized image elements"
 gameplay_images:
-  - /assets/images/games/etu/gameplay1.png
-  - /assets/images/games/etu/gameplay2.png
-  - /assets/images/games/etu/gameplay3.png
+  - /assets/images/games/etu/gameplay1.jpg
+  - /assets/images/games/etu/gameplay2.jpg
+  - /assets/images/games/etu/gameplay3.jpg
 ---
 
 Eat The Universe is one of two mobile games I shipped as Unity engineer at Singularity Forge, released on Android and iOS.

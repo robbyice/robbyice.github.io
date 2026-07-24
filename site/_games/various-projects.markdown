@@ -13,9 +13,9 @@ highlights:
   - "Developed tooling to generate a traversable graph of nodes within a polygon, for prototyping various overworld map shapes"
   - "Built various small game demos and prototypes"
 # gameplay_images:
-#   - /assets/images/games/various/gameplay1.png
-#   - /assets/images/games/various/gameplay2.png
-#   - /assets/images/games/various/gameplay3.png
+#   - /assets/images/games/various/gameplay1.jpg
+#   - /assets/images/games/various/gameplay2.jpg
+#   - /assets/images/games/various/gameplay3.jpg
 ---
 
 A collection of self-directed projects, classes, and experiments used to sharpen skills outside of paid work.
