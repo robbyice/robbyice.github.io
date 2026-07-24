@@ -33,5 +33,5 @@ var store = [{
         "excerpt":"So we’re going to start the blog off by talking a bit about a feature I worked on for a previous game, Eat the Universe. ETU is sort of an “on-rails” runner arcade game, where the player character is automatically moving forwards along a track and trying to avoid certain...","categories": ["art","games"],
         "tags": [],
         "url": "/art/games/2026/07/20/turning-vector-into-gameobjects.html",
-        "teaser": "/assets/images/blog/1_etu_tile_pipeline/shapes_in_tile.png"
+        "teaser": "/assets/images/blog/1_etu_tile_pipeline/shapes_in_tile.jpg"
       }]
