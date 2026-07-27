@@ -32,7 +32,7 @@ var store = [{
         "title": "From Vector Art to Neat Arrangements of GameObjects",
         "excerpt":"So we’re going to start the blog off by talking a bit about a feature I worked on for a previous game, Eat the Universe. ETU is sort of an “on-rails” runner arcade game, where the player character is automatically moving forwards along a track and trying to avoid certain...","categories": ["art","games","engineering"],
         "tags": [],
-        "url": "/art/games/engineering/2026/07/20/turning-vector-into-gameobjects.html",
+        "url": "/art/games/engineering/2026/06/20/turning-vector-into-gameobjects.html",
         "teaser": "/assets/images/blog/1_etu_tile_pipeline/shapes_in_tile.jpg"
       },{
         "title": "From Tiles to Tracks: Runtime Track Generation",
