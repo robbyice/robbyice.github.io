@@ -1,14 +1,14 @@
 ---
 title:  "From Vector Art to Neat Arrangements of GameObjects"
 date:   2026-07-20 12:25:30 -0700
-categories: art games
+categories: art games engineering
 header:
   teaser: /assets/images/blog/1_etu_tile_pipeline/shapes_in_tile.jpg
 ---
 
 So we're going to start the blog off by talking a bit about a feature I worked on for a previous game, Eat the Universe. ETU is sort of an "on-rails" runner arcade game, where the player character is automatically moving forwards along a track and trying to avoid certain objects and gather others.
 
-<figure class="post-figure">
+<figure class="post-figure post-figure--phone">
   <img src="/assets/images/games/etu/gameplay2.jpg" alt="Eat the Universe gameplay" loading="lazy">
   {% assign etu = site.games | where: "title", "Eat The Universe" | first %}
   <figcaption>Eat the Universe, now available on <a href="{{ etu.app_store_url }}" target="_blank" rel="noopener noreferrer">iOS</a> and <a href="{{ etu.play_store_url }}" target="_blank" rel="noopener noreferrer">Android</a></figcaption>
@@ -80,7 +80,8 @@ Some outputs required a bit of additional touchup — usually just shifting an o
   <figcaption>All sorts of random WIP shapes and arrangements.</figcaption>
 </figure>
 
-Next time I'll go over some special types of tiles that are built during runtime and how the track uses those tiles during gameplay.
+{% assign next_post = site.posts | where: "title", "From Tiles to Tracks: Runtime Track Generation" | first %}
+[Next time]({{ next_post.url }}) I'll go over some special types of tiles that are built during runtime and how the track uses those tiles during gameplay.
 
 <figure class="post-figure">
   <img src="/assets/images/blog/1_etu_tile_pipeline/solar_system_preview.jpg" alt="Solar system preview" loading="lazy">

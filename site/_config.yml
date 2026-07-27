@@ -32,7 +32,7 @@ minimal_mistakes_skin: "dark"
 
 author:
   name: "Rob Neumann"
-  avatar: # e.g. /assets/images/avatar.jpg — square image recommended, add the file under site/assets/images/
+  avatar: /assets/images/avatar.jpg
   bio: "Programmer & Game Developer based in Seattle, Washington"
   location: "Seattle, WA"
   email: "robert@bestangle.com"
@@ -66,6 +66,7 @@ defaults:
 theme: minimal-mistakes-jekyll
 plugins:
   - jekyll-feed
+  - jekyll-sitemap
 
 # Exclude from processing.
 # The following items will not be processed, by default.

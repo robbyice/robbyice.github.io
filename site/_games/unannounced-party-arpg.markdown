@@ -12,15 +12,13 @@ placeholder_color: "#3a3a3a"
 order: 3
 role: "Solo Developer"
 highlights:
-  - "Utilized a custom camera projection to achieve a unique 2.5D look"
-  - "Implemented an event-driven architecture with UniRX for improved separation of concerns, including reactive UI collections"
-  - "Built custom combat and movement animation systems leveraging handmade bone-based animations"
-  - "Created a responsive UI layout handling varied device dimensions, backed by an MVC architecture"
+  - "Single player, roguelite party-based ARPG targeting mobile platforms"
+  - "Utilized homemade art with a custom camera projection to achieve a unique 2.5D look"
+  - "Built with an event-driven architecture with UniRX"
+  - "Custom combat and movement animation systems using bone-based animation made in Spine 2D"
 gameplay_images:
   - /assets/images/games/bs/gameplay2.jpg
   - /assets/images/games/bs/gameplay3.jpg
 ---
 
 A party-based 2.5D RPG for mobile, built solo — spanning everything from custom engine-level tooling to combat and animation systems.
-
-PLACEHOLDER — longer-form description once this project is ready to announce.
