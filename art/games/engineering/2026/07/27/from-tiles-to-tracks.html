@@ -1,0 +1,599 @@
+
+
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.28.0 by Michael Rose
+  Copyright 2013-2026 Michael Rose - mademistakes.com | @mmistakes
+  Copyright 2024-2026 iBug - ibugone.com | @iBug
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    
+<meta charset="utf-8">
+
+
+<!-- begin _includes/seo.html --><title>From Tiles to Tracks: Runtime Track Generation - Rob Neumann</title>
+<meta name="description" content="Last time we looked at how the tile content for Eat The Universe (ETU) is generated from vector art assets, allowing the team to quickly create hundreds of interesting arrangements and shapes of obstacles for tiles to be used in levels. Today we’ll look at the systems that build a track from tiles and how we managed to get unique and replayable levels.">
+
+
+  <meta name="author" content="Rob Neumann">
+  
+  <meta property="article:author" content="Rob Neumann">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Rob Neumann">
+<meta property="og:title" content="From Tiles to Tracks: Runtime Track Generation">
+<meta property="og:url" content="https://robbyice.github.io/art/games/engineering/2026/07/27/from-tiles-to-tracks.html">
+
+
+  <meta property="og:description" content="Last time we looked at how the tile content for Eat The Universe (ETU) is generated from vector art assets, allowing the team to quickly create hundreds of interesting arrangements and shapes of obstacles for tiles to be used in levels. Today we’ll look at the systems that build a track from tiles and how we managed to get unique and replayable levels.">
+
+
+
+  <meta property="og:image" content="https://robbyice.github.io/assets/images/blog/2_etu_track_generation/angled_track_shot_2.jpg">
+  
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2026-07-27T19:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://robbyice.github.io/art/games/engineering/2026/07/27/from-tiles-to-tracks.html">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Rob Neumann Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    
+<nav class="skip-links" aria-label="Skip links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav" aria-label="Primary navigation">
+        
+        <a class="site-title" href="/">
+          Rob Neumann
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/"
+                
+                
+              >Home</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/games"
+                
+                
+              >Games</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog"
+                
+                
+              >Blog</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+
+
+<div id="main" role="main">
+  
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://robbyice.github.io/">
+        <img src="/assets/images/avatar.jpg" alt="Rob Neumann" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://robbyice.github.io/" itemprop="url">Rob Neumann</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Programmer &amp; Game Developer based in Seattle, Washington</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-location-dot" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Seattle, WA</span>
+        </li>
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:robert@bestangle.com" rel="me" class="u-email">
+            <meta itemprop="email" content="robert@bestangle.com" />
+            <i class="fas fa-fw fa-square-envelope" aria-hidden="true"></i><span class="label">Email</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://www.linkedin.com/in/rob-neumann" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+            <i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://github.com/robbyice" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+            <i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="From Tiles to Tracks: Runtime Track Generation">
+    <meta itemprop="description" content="Last time we looked at how the tile content for Eat The Universe (ETU) is generated from vector art assets, allowing the team to quickly create hundreds of interesting arrangements and shapes of obstacles for tiles to be used in levels. Today we’ll look at the systems that build a track from tiles and how we managed to get unique and replayable levels.">
+    <meta itemprop="datePublished" content="2026-07-27T19:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://robbyice.github.io/art/games/engineering/2026/07/27/from-tiles-to-tracks.html" itemprop="url">From Tiles to Tracks: Runtime Track Generation
+</a>
+          </h1>
+          
+
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+        
+<p><a href="/art/games/engineering/2026/07/20/turning-vector-into-gameobjects.html">Last time</a> we looked at how the tile content for Eat The Universe (ETU) is generated from vector art assets, allowing the team to quickly create hundreds of interesting arrangements and shapes of obstacles for tiles to be used in levels. Today we’ll look at the systems that build a track from tiles and how we managed to get unique and replayable levels.</p>
+
+<p>Reviewing the core concepts here:</p>
+
+<ul>
+  <li><strong>Track:</strong> The track the player character moves along as the game progresses</li>
+  <li><strong>Tile:</strong> A tile is a container for some arrangement of obstacles. Tiles are placed on the track as the player moves along the track.</li>
+</ul>
+
+<div class="post-figure-pair">
+  <figure class="post-figure">
+    <img src="/assets/images/blog/1_etu_tile_pipeline/shapes_in_tile.jpg" alt="Example tile with an arrangement of obstacles" loading="lazy" />
+    <figcaption>Example tile with an arrangement of obstacles</figcaption>
+  </figure>
+  <figure class="post-figure">
+    <img src="/assets/images/blog/1_etu_tile_pipeline/track_example.jpg" alt="Example track with different tiles" loading="lazy" />
+    <figcaption>Example track with different tiles</figcaption>
+  </figure>
+</div>
+
+<figure class="post-figure">
+  <img src="/assets/images/blog/1_etu_tile_pipeline/shapes_top_down_2.jpg" alt="Generated tile arrangements" loading="lazy" />
+  <figcaption>Here's an example of some of the tiles we ended up generating.</figcaption>
+</figure>
+
+<p>After generating the tiles, we organized them into themes, each of which was assigned to a Galaxy. So each Galaxy is effectively just a themed set of levels with a particular environment — for example, one galaxy is all spirals, curves, circles, etc; another is square and rectangle shapes, so on and so forth.</p>
+
+<p>This set of themed tiles is sorted by number of object positions (points) they contain, which is a rough approximation of “difficulty,” and then distributed amongst the levels in the themed galaxy. The idea being if you’re moving through levels in “Blockbreaker Belt” (squares, rectangular shapes), you’d on average see simpler square obstacle arrangements at early levels and more complex ones at a higher level.</p>
+
+<figure class="post-figure post-figure--phone">
+  <img src="/assets/images/blog/2_etu_track_generation/galaxies_panel.jpg" alt="Galaxies panel" loading="lazy" />
+  <figcaption>Galaxy and level selection panel</figcaption>
+</figure>
+
+<p>We knew we wanted each level to have at least a couple different tile arrangements, but not every theme had a large number of unique arrangements — so there is some repeat and overlap for tiles between levels. Basically, tiles within a theme are assigned to levels using a moving window on the theme’s tile list (sorted by difficulty). All of this is done automatically by our scripts — the sorting of tiles into themes, building the levels and level content, and organizing everything into galaxy and level ScriptableObject assets.</p>
+
+<figure class="post-figure">
+  <img src="/assets/images/blog/2_etu_track_generation/level_tile_content_1.png" alt="Level tile content data" loading="lazy" />
+  <figcaption>An early level has very simple tiles - basic lines and caret signs</figcaption>
+</figure>
+
+<figure class="post-figure">
+  <img src="/assets/images/blog/2_etu_track_generation/level_tile_content_2.png" alt="Level tile content data" loading="lazy" />
+  <figcaption>A later level with denser arrangements - zig zags, lightning bolts, etc.</figcaption>
+</figure>
+
+<p>So at this point we’ve got a level and maybe 3-5 tiles for building the track. Just randomly sampling the tiles we have will do a decent enough job of randomizing the tracks and making them more interesting, but we wanted to take it a bit further. So we introduced a few special types of tiles that are built and work differently from the stuff we’ve seen so far from the tile pipeline. These tiles are more dynamic — they are generated during gameplay rather than an asset built ahead of time.</p>
+
+<h2 id="compound-tiles">Compound Tiles</h2>
+
+<p>Any time the track fetches a tile to be placed, there is a chance that tile is a special compound tile. Compound tiles are runtime-generated tiles that, as you might expect, contain some number of sub-tiles. Any tiles within the compound tile are placed flush with each other, rather than following the usual spacing mechanisms. The goal for compound tiles is twofold — firstly to allow for more intense moments in gameplay with denser areas of objects and obstacles, and secondly to increase the overall variety and potential difficulty of tiles placed on the track.</p>
+
+<figure class="post-figure">
+  <img src="/assets/images/blog/2_etu_track_generation/compound_tile_2.jpg" alt="Compound tile example" loading="lazy" />
+</figure>
+
+<p>The fact that the tiles are placed flush together in particular lets us do some cool stuff with “seamless” starting tiles. For example, we can make one tile the first piece of a zigzag, and if set up correctly to be “seamless,” we can use compound tiles to create a zigzag arrangement of obstacles of a dynamic and configurable length. Pretty neat!</p>
+
+<figure class="post-figure">
+  <img src="/assets/images/blog/2_etu_track_generation/compound_tile_1.jpg" alt="Zigzag compound tile" loading="lazy" />
+  <figcaption>This compound tile is using two different "zigzag" pieces so it's not quite seamless, but you get the idea…</figcaption>
+</figure>
+
+<h2 id="solar-systems">Solar Systems</h2>
+
+<figure class="post-figure">
+  <img src="/assets/images/blog/2_etu_track_generation/angled_track_shot_1.jpg" alt="Solar system tile on the track" loading="lazy" />
+</figure>
+
+<p>One other special type of tile that can be selected for placement on the track is a Solar System tile. These are what you’d expect, tiles with a central star and orbiting concentric rings of planets and asteroids. Similar to compound tiles, these are dynamically built during gameplay rather than being prefab assets built through the tile building pipeline.</p>
+
+<p>It’s also worth noting that these tiles serve a distinct and important gameplay purpose — they are the only tiles that spawn planet and star objects, which players will try to consume once they’ve reached a certain size in order to further their growth and eventually get temporary special powers from eating stars.</p>
+
+<p>The arrangement of the Solar System — i.e. how many objects, what types of objects, how many rings, the radii of the rings, etc — is not random. To ensure that the visual presentation of solar systems looks good, Solar Systems are built from a configuration ScriptableObject asset that provides all needed parameters. So there’s a bit less dynamism here; we basically have Solar Systems that are prescribed to certain game states, and we just serve a system that is configured to look good in the given state. More explicitly, we serve a more voluminous and overall denser system the larger the player character is. So when the player is at their smallest size and can’t even eat planets yet, Solar Systems are much smaller and will have few or no planets orbiting them.</p>
+
+<figure class="post-figure">
+  <img src="/assets/images/blog/2_etu_track_generation/solar_system_config.jpg" alt="Solar system configuration" loading="lazy" />
+</figure>
+
+<p>There’s <em>some</em> configurability for when and how often Solar Systems appear, but the systems and their content are relatively fixed and simple.</p>
+
+<p>Solar Systems are one of the most important and probably interesting parts of the gameplay, but overall the systems behind them stayed pretty simple and were never iterated on much. I think improving Solar Systems to make them even more dynamic and interesting would provide some relatively cost-effective value to the game. Maybe one day!</p>
+
+<figure class="post-figure post-figure--phone">
+  <img src="/assets/images/blog/2_etu_track_generation/solar_system_end.jpg" alt="Solar system in action" loading="lazy" />
+  <figcaption>The player maneuvers around enemy objects through the system to eat planets and hopefully the star!</figcaption>
+</figure>
+
+<p>So, just to review, here’s all the systems and tools we’ve covered that help enable Eat the Universe to have dynamic procedural tracks:</p>
+
+<ol>
+  <li><strong>Vector Art To Tile Pipeline</strong>
+    <ol>
+      <li>Scan resources for vector art, for each art asset take vector art path data, tessellate and sample positional data, persist positional data as prefab GameObject named for the shape in the art</li>
+    </ol>
+  </li>
+  <li><strong>Level Content Generation</strong>
+    <ol>
+      <li>Given our hundreds of generated tile GameObjects, take all the tiles, organize them into themes by keyword identifiers, build galaxy and level data assets, distribute sorted tile content across all levels</li>
+    </ol>
+  </li>
+  <li><strong>Runtime Track Generation</strong>
+    <ol>
+      <li>Given a level with some number of tiles, randomly polls for tiles to place on the track. Sometimes polling will return a Solar System or Compound tile, which is then built dynamically either from level content (Compound) or additional data assets (Solar System)</li>
+    </ol>
+  </li>
+</ol>
+
+<p>Of course, there are a few more systems on top of this, but I’ll leave it here for now.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+  
+
+  
+
+
+        
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-07-27T19:00:00+00:00">July 27, 2026</time></p>
+
+
+      </footer>
+
+      
+<section class="page__share">
+  <h4 class="page__share-title">Share on</h4>
+
+  <a href="https://x.com/intent/tweet?text=From+Tiles+to+Tracks%3A+Runtime+Track+Generation%20https%3A%2F%2Frobbyice.github.io%2Fart%2Fgames%2Fengineering%2F2026%2F07%2F27%2Ffrom-tiles-to-tracks.html" class="btn btn--x" aria-label="Share on X" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on X">
+    <i class="fab fa-fw fa-x-twitter" aria-hidden="true"></i><span> X</span>
+  </a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frobbyice.github.io%2Fart%2Fgames%2Fengineering%2F2026%2F07%2F27%2Ffrom-tiles-to-tracks.html" class="btn btn--facebook" aria-label="Share on Facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook">
+    <i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span>
+  </a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://robbyice.github.io/art/games/engineering/2026/07/27/from-tiles-to-tracks.html" class="btn btn--linkedin" aria-label="Share on LinkedIn" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn">
+    <i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span>
+  </a>
+
+  <a href="https://bsky.app/intent/compose?text=From+Tiles+to+Tracks%3A+Runtime+Track+Generation%20https%3A%2F%2Frobbyice.github.io%2Fart%2Fgames%2Fengineering%2F2026%2F07%2F27%2Ffrom-tiles-to-tracks.html" class="btn btn--bluesky" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Bluesky">
+    <i class="fab fa-fw fa-bluesky" aria-hidden="true"></i><span> Bluesky</span>
+  </a>
+</section>
+
+
+      
+
+  <nav class="pagination" aria-label="Post pagination">
+    
+      <a href="/art/games/engineering/2026/07/20/turning-vector-into-gameobjects.html" class="pagination--pager" title="From Vector Art to Neat Arrangements of GameObjects">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    
+
+<div class="page__related">
+  
+  <h2 class="page__related-title">You May Also Enjoy</h2>
+  <div class="grid__wrapper">
+    
+      
+      
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/blog/1_etu_tile_pipeline/shapes_in_tile.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/art/games/engineering/2026/07/20/turning-vector-into-gameobjects.html" rel="permalink">From Vector Art to Neat Arrangements of GameObjects
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">So we’re going to start the blog off by talking a bit about a feature I worked on for a previous game, Eat the Universe. ETU is sort of an “on-rails” runner ...</p>
+  </article>
+</div>
+
+    
+  </div>
+</div>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-square-rss" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://robbyice.github.io">Rob Neumann</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

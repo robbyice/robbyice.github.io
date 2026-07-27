@@ -1,6 +1,6 @@
 var store = [{
         "title": "Unannounced Party-Based ARPG",
-        "excerpt":"A party-based 2.5D RPG for mobile, built solo — spanning everything from custom engine-level tooling to combat and animation systems.   PLACEHOLDER — longer-form description once this project is ready to announce.  ","categories": [],
+        "excerpt":"A party-based 2.5D RPG for mobile, built solo — spanning everything from custom engine-level tooling to combat and animation systems.  ","categories": [],
         "tags": [],
         "url": "/games/unannounced-party-arpg.html",
         "teaser": null
@@ -30,8 +30,14 @@ var store = [{
         "teaser": null
       },{
         "title": "From Vector Art to Neat Arrangements of GameObjects",
-        "excerpt":"So we’re going to start the blog off by talking a bit about a feature I worked on for a previous game, Eat the Universe. ETU is sort of an “on-rails” runner arcade game, where the player character is automatically moving forwards along a track and trying to avoid certain...","categories": ["art","games"],
+        "excerpt":"So we’re going to start the blog off by talking a bit about a feature I worked on for a previous game, Eat the Universe. ETU is sort of an “on-rails” runner arcade game, where the player character is automatically moving forwards along a track and trying to avoid certain...","categories": ["art","games","engineering"],
         "tags": [],
-        "url": "/art/games/2026/07/20/turning-vector-into-gameobjects.html",
+        "url": "/art/games/engineering/2026/07/20/turning-vector-into-gameobjects.html",
         "teaser": "/assets/images/blog/1_etu_tile_pipeline/shapes_in_tile.jpg"
+      },{
+        "title": "From Tiles to Tracks: Runtime Track Generation",
+        "excerpt":"Last time we looked at how the tile content for Eat The Universe (ETU) is generated from vector art assets, allowing the team to quickly create hundreds of interesting arrangements and shapes of obstacles for tiles to be used in levels. Today we’ll look at the systems that build a...","categories": ["art","games","engineering"],
+        "tags": [],
+        "url": "/art/games/engineering/2026/07/27/from-tiles-to-tracks.html",
+        "teaser": "/assets/images/blog/2_etu_track_generation/angled_track_shot_2.jpg"
       }]
