@@ -1,6 +1,6 @@
 ---
 title:  "From Vector Art to Neat Arrangements of GameObjects"
-date:   2026-07-20 12:25:30 -0700
+date:   2026-06-20 12:25:30 -0700
 categories: art games engineering
 header:
   teaser: /assets/images/blog/1_etu_tile_pipeline/shapes_in_tile.jpg
