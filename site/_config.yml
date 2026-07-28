@@ -24,6 +24,7 @@ description: >- # this means to ignore newlines until "baseurl:"
   Game Developer, Unity & Mobile Engineer. 
   Personal site and blog for thoughts, work on upcoming games, and more!
 baseurl: "" # the subpath of your site, e.g. /blog
+permalink: /:year/:month/:day/:title.html # keeps categories as metadata only, not part of the URL
 url: "https://robbyice.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username:
 github_username:  robbyice
